@@ -1,0 +1,43 @@
+class Trie {
+    private:
+    bool is_string = false;
+    Trie* number[26] = {nullptr}; 
+public:
+    Trie() {
+
+    }
+    
+	void insert(const string& word)
+	{
+		Trie* root = this;
+		for (const auto& w : word) {
+			if (root->number[w - 'a'] == nullptr)
+            {
+                root->number[w - 'a'] = new Trie();
+            }
+			root = root->number[w - 'a'];
+           
+		}
+		root->is_string = true;
+	}
+
+	bool search(const string& word)
+	{
+		Trie* root = this;
+		for (const auto& w : word) {
+			if (root->number[w - 'a'] == nullptr)return false;
+			root = root->number[w - 'a'];
+		}
+		return root->is_string;
+	}
+
+	bool startsWith(const string& prefix)
+	{
+		Trie* root = this;
+		for (const auto& p : prefix) {
+			if (root->number[p - 'a'] == nullptr)return false;
+			root = root->number[p - 'a'];
+		}
+		return true;
+	}
+};
